@@ -1,0 +1,19 @@
+.create-course__title-holder {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.create-course__main-item {
+  margin-top: 15px;
+}
+
+legend {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+}

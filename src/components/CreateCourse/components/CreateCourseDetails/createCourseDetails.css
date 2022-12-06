@@ -1,0 +1,20 @@
+.create-course__details {
+  display: flex;
+  gap: 20px;
+}
+
+.create-course__details-col {
+  width: 50%;
+}
+
+.create-course__details-title {
+  text-align: center;
+}
+
+.author-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 40px;
+  align-items: center;
+  margin-bottom: 15px;
+}
