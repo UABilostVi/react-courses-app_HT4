@@ -1,16 +1,18 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { pipeDuration } from '../../helpers/pipeDuration';
 import { transformDate } from '../../helpers/dateGenerator';
-import {
-	mockedCoursesList as coursesList,
-	mockedAuthorsList as authorsList,
-} from '../../constants';
+import // mockedCoursesList as coursesList,
+// mockedAuthorsList as authorsList,
+'../../constants';
 
 import './courseInfo.css';
 
 const CourseInfo = () => {
+	let coursesList = useSelector((state) => state.courses);
+	let authorsList = useSelector((state) => state.authors);
 	const { courseId } = useParams();
 	const course = coursesList.find((course) => {
 		return course.id === courseId;

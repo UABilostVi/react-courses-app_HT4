@@ -5,13 +5,9 @@ import './button.css';
 const Button = (props) => {
 	let classes = 'button';
 	classes += props.centered === true ? ' centered' : '';
+	classes += props.serviceButton === true ? ' service-button' : '';
 	return (
-		<button
-			className={classes}
-			// style={props.style}
-			type={props.type}
-			onClick={props.onClick}
-		>
+		<button className={classes} type={props.type} onClick={props.onClick}>
 			{props.buttonText}
 		</button>
 	);

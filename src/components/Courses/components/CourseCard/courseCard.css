@@ -25,3 +25,9 @@
 .course-card__title {
   margin-top: 0;
 }
+
+.course-card__buttons-holder {
+  display: flex;
+  gap: 5px;
+  margin: 10px 0;
+}

@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import { CoursesList } from './components/CoursesList';
+import { CourseCard } from './components/CourseCard';
 import { SearchBar } from './components/SearchBar';
 import { Button } from '../../common/Button';
-import {
-	mockedCoursesList as coursesList,
-	mockedAuthorsList as authorsList,
-	BUTTON_ADD_COURSE_TEXT,
-} from '../../constants';
+
+import { BUTTON_ADD_COURSE_TEXT } from '../../constants';
 
 import './courses.css';
 
-const Courses = (props) => {
+const Courses = () => {
+	let coursesList = useSelector((state) => state.courses);
 	const navigate = useNavigate();
 	let [searchText, setSearchText] = useState('');
 
@@ -33,9 +32,13 @@ const Courses = (props) => {
 
 	let filteredList = coursesList.filter((course) => {
 		return (
-			course.title.toLocaleLowerCase().includes(searchText) ||
-			course.id.toLocaleLowerCase().includes(searchText)
+			course.title.toLowerCase().includes(searchText) ||
+			course.id.toLowerCase().includes(searchText)
 		);
+	});
+
+	let courses = filteredList.map((course) => {
+		return <CourseCard key={course.id} course={course} />;
 	});
 
 	return (
@@ -44,7 +47,7 @@ const Courses = (props) => {
 				<SearchBar handleSubmit={handleSubmit} handleChange={handleChange} />
 				<Button buttonText={BUTTON_ADD_COURSE_TEXT} onClick={handleAddCourse} />
 			</div>
-			<CoursesList coursesList={filteredList} authorsList={authorsList} />
+			<div className='courses-list'>{courses}</div>
 		</div>
 	);
 };

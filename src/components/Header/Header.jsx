@@ -1,24 +1,35 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Button } from '../../common/Button';
 import { Logo } from './components/Logo';
+import { logOutAction } from '../../store/user/actionCreators';
 import { BUTTON_LOGOUT_TEXT } from '../../constants';
 
 import './header.css';
 
-const Header = (props) => {
+const Header = () => {
+	const isAuth = useSelector((state) => state.user.isAuth);
+	const userName = useSelector((state) => state.user.name);
 	const navigate = useNavigate();
-	let location = useLocation();
+	const dispatch = useDispatch();
+	const location = useLocation();
 
 	function onLogin() {
 		navigate('/login');
 	}
 
-	let renderLog;
-	if (location.pathname === '/login' || location.pathname === '/registration') {
-		renderLog = false;
-	} else renderLog = true;
+	function logOutHandler() {
+		localStorage.removeItem('userToken');
+		dispatch(logOutAction());
+		navigate('/login');
+	}
+
+	const renderLog =
+		location.pathname === '/login' || location.pathname === '/registration'
+			? false
+			: true;
 
 	return (
 		<header className='header'>
@@ -27,15 +38,13 @@ const Header = (props) => {
 					<Logo className='logo' />
 					{renderLog && (
 						<>
-							{!props.isLogedIn && (
-								<Button buttonText='Login' onClick={onLogin} />
-							)}
-							{props.isLogedIn && (
+							{!isAuth && <Button buttonText='Login' onClick={onLogin} />}
+							{isAuth && (
 								<div className='header__logout'>
-									<div className='user-name'>Vit</div>
+									<div className='user-name'>{userName}</div>
 									<Button
 										buttonText={BUTTON_LOGOUT_TEXT}
-										onClick={props.logOut}
+										onClick={logOutHandler}
 									/>
 								</div>
 							)}

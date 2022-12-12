@@ -1,5 +1,4 @@
 .button {
-  display: block;
   background: transparent;
   width: 150px;
   height: 30px;
@@ -8,4 +7,9 @@
 
 .centered {
   margin: 15px auto;
+  display: block;
+}
+
+.service-button {
+  width: auto;
 }

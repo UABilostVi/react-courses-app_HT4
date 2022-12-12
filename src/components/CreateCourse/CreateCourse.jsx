@@ -1,27 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { CreateCourseMain } from './components/CreateCourseMain';
 import { CreateCourseDetails } from './components/CreateCourseDetails';
-import { mockedCoursesList } from '../../constants';
+import { AuthorListItem } from './components/CreateCourseDetails/components/AuthorListItem';
+import { getCreationDate } from '../../helpers/dateGenerator';
+import { createAuthorAction } from '../../store/authors/actionCreators';
+import { addCourseAction } from '../../store/courses/actionCreators';
 import {
-	mockedAuthorsList as authors,
 	BUTTON_ADD_AUTHOR_TEXT,
 	BUTTON_DEL_AUTHOR_TEXT,
 	FILL_ALERT,
 	CHARS_ALERT,
 } from '../../constants';
-import { AuthorListItem } from './components/CreateCourseDetails/components/AuthorListItem';
-import { getCreationDate } from '../../helpers/dateGenerator';
 
 import './createCourse.css';
 
-const CreateCourse = (props) => {
+const CreateCourse = () => {
+	let authors = useSelector((state) => state.authors);
 	let [newCourseAuthorsList, setCourseAuthorsList] = useState([]);
-	let [newAuthorsList, setAuthorsList] = useState(authors);
+	let [newCourseAuthor, setnewCourseAuthor] = useState([]);
 	let [name, setName] = useState('');
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		setnewCourseAuthor(authors);
+	}, [authors]);
 
 	function onChangeHandler(e) {
 		setName(e.target.value);
@@ -33,9 +40,8 @@ const CreateCourse = (props) => {
 			return;
 		}
 		let newAuthor = { id: uuidv4(), name: name };
-		setAuthorsList([newAuthor, ...newAuthorsList]);
+		dispatch(createAuthorAction(newAuthor));
 		setName('');
-		authors.push(newAuthor);
 	}
 
 	function handleSubmit(e) {
@@ -54,33 +60,33 @@ const CreateCourse = (props) => {
 
 	function createCourse(e) {
 		let newCourse = {
-			id: uuidv4(),
 			title: e.target.title.value,
 			description: e.target.description.value,
 			creationDate: getCreationDate(),
-			duration: e.target.duration.value,
+			duration: Number(e.target.duration.value),
 			authors: newCourseAuthorsList.map((course) => {
 				return course.id;
 			}),
+			id: uuidv4(),
 		};
-		mockedCoursesList.push(newCourse);
+		dispatch(addCourseAction(newCourse));
 	}
 
-	function addCourseAuthor(newCourseAuthor) {
-		setCourseAuthorsList([newCourseAuthor, ...newCourseAuthorsList]);
-		setAuthorsList((prev) =>
-			prev.filter((item) => item.id !== newCourseAuthor.id)
+	function addCourseAuthor(newAuthor) {
+		setCourseAuthorsList([newAuthor, ...newCourseAuthorsList]);
+		setnewCourseAuthor((prev) =>
+			prev.filter((item) => item.id !== newAuthor.id)
 		);
 	}
 
-	function delCourseAuthor(newCourseAuthor) {
-		setAuthorsList([newCourseAuthor, ...newAuthorsList]);
+	function delCourseAuthor(newAuthor) {
+		setnewCourseAuthor([newAuthor, ...newCourseAuthor]);
 		setCourseAuthorsList((prev) =>
-			prev.filter((item) => item.id !== newCourseAuthor.id)
+			prev.filter((item) => item.id !== newAuthor.id)
 		);
 	}
 
-	let authorsList = newAuthorsList.map((author) => {
+	let authorsList = newCourseAuthor.map((author) => {
 		return (
 			<AuthorListItem
 				id={author.id}

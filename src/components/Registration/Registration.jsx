@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 import { Input } from '../../common/Input';
 import { Button } from '../../common/Button';
+import { fetchRegistr } from '../../services';
 
 import './registration.css';
 
@@ -12,30 +12,30 @@ const Registration = () => {
 	let [email, setEmail] = useState('');
 	let [password, setPassword] = useState('');
 	const navigate = useNavigate();
+
 	const submitHandler = (e) => {
 		e.preventDefault();
-		axios
-			.post('http://localhost:4000/register', {
-				name: name,
-				email: email,
-				password: password,
-			})
-			.then(() => {
-				navigate('/login');
-			})
-			.catch(() => {
-				alert('Wrong data');
-			});
+		let newUser = {
+			name: name,
+			email: email,
+			password: password,
+		};
+		fetchRegistr(newUser);
+		navigate('/login');
 	};
+
 	function onChangeName(e) {
 		setName(e.target.value);
 	}
+
 	function onChangeEmail(e) {
 		setEmail(e.target.value);
 	}
+
 	function onChangePassword(e) {
 		setPassword(e.target.value);
 	}
+
 	return (
 		<div className='auth-wrapper'>
 			<form onSubmit={submitHandler}>
