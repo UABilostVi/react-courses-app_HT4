@@ -9,7 +9,7 @@ import { AuthorListItem } from './components/CreateCourseDetails/components/Auth
 import { getCreationDate } from '../../helpers/dateGenerator';
 import { createAuthorAction } from '../../store/authors/actionCreators';
 import { addCourseAction } from '../../store/courses/actionCreators';
-// import { createAuthor } from '../../services';
+import { getAuthors } from './selectors';
 import {
 	BUTTON_ADD_AUTHOR_TEXT,
 	BUTTON_DEL_AUTHOR_TEXT,
@@ -20,12 +20,12 @@ import {
 import './createCourse.css';
 
 const CreateCourse = () => {
-	let authors = useSelector((state) => state.authors);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	let authors = useSelector(getAuthors);
 	let [newCourseAuthorsList, setCourseAuthorsList] = useState([]);
 	let [newCourseAuthor, setnewCourseAuthor] = useState([]);
 	let [name, setName] = useState('');
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
 
 	useEffect(() => {
 		setnewCourseAuthor(authors);
@@ -35,23 +35,22 @@ const CreateCourse = () => {
 		setName(e.target.value);
 	}
 
-	function addAuthor() {
-		if (name.length < 2) {
+	function onCreateAuthor() {
+		if (name.length < 2 || name.trim() === '') {
 			alert(CHARS_ALERT);
 			return;
 		}
 		let newAuthor = { id: uuidv4(), name: name };
 		dispatch(createAuthorAction(newAuthor));
-		// createAuthor(newAuthor);
 		setName('');
 	}
 
-	function handleSubmit(e) {
+	function onSubmit(e) {
 		e.preventDefault();
 		if (
-			e.target.description.value === '' ||
-			e.target.title.value === '' ||
-			e.target.duration.value === ''
+			e.target.description.value.trim() === '' ||
+			e.target.title.value.trim() === '' ||
+			e.target.duration.value.trim() === ''
 		) {
 			alert(FILL_ALERT);
 			return;
@@ -123,12 +122,12 @@ const CreateCourse = () => {
 
 	return (
 		<div className='container'>
-			<form onSubmit={handleSubmit} className='create-course__wrapper'>
+			<form onSubmit={onSubmit} className='create-course__wrapper'>
 				<CreateCourseMain />
 				<CreateCourseDetails
 					authorsList={authorsList}
 					courseAuthorsList={courseAuthorsList}
-					addAuthor={addAuthor}
+					addAuthor={onCreateAuthor}
 					onChangeHandler={onChangeHandler}
 					name={name}
 				/>

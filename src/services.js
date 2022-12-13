@@ -24,7 +24,7 @@ export const fetchRegistr = async (newUser) => {
 	return res;
 };
 
-export const getAllCourses = async () => {
+export const fetchAllCourses = async () => {
 	let courses = await axios
 		.get('http://localhost:4000/courses/all')
 		.then((response) => {
@@ -36,7 +36,7 @@ export const getAllCourses = async () => {
 	return courses;
 };
 
-export const getAllAuthors = async () => {
+export const fetchAllAuthors = async () => {
 	let authors = await axios
 		.get('http://localhost:4000/authors/all')
 		.then((response) => {
@@ -47,19 +47,3 @@ export const getAllAuthors = async () => {
 		});
 	return authors;
 };
-
-// export const createAuthor = async (newAuthor) => {
-// 	const token = JSON.parse(localStorage.getItem('userToken'));
-// 	await axios
-// 		.post('http://localhost:4000/authors/add', newAuthor, {
-// 			headers: {
-// 				Authorization: `${token.token}`,
-// 			},
-// 		})
-// 		.then((res) => {
-// 			return res;
-// 		})
-// 		.catch((err) => {
-// 			alert(err.message);
-// 		});
-// };

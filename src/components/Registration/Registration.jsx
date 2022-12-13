@@ -4,8 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Input } from '../../common/Input';
 import { Button } from '../../common/Button';
 import { fetchRegistr } from '../../services';
-
-import './registration.css';
+import {
+	REGISTRATION_TEXT,
+	BUTTON_LOGIN_TEXT,
+	PASSWORD,
+	EMAIL,
+	NAME,
+} from '../../constants';
 
 const Registration = () => {
 	let [name, setName] = useState('');
@@ -13,7 +18,7 @@ const Registration = () => {
 	let [password, setPassword] = useState('');
 	const navigate = useNavigate();
 
-	const submitHandler = (e) => {
+	function submitHandler(e) {
 		e.preventDefault();
 		let newUser = {
 			name: name,
@@ -22,7 +27,7 @@ const Registration = () => {
 		};
 		fetchRegistr(newUser);
 		navigate('/login');
-	};
+	}
 
 	function onChangeName(e) {
 		setName(e.target.value);
@@ -40,25 +45,30 @@ const Registration = () => {
 		<div className='auth-wrapper'>
 			<form onSubmit={submitHandler}>
 				<fieldset>
-					<legend className='text-center'>Registration</legend>
+					<legend className='text-center'>{REGISTRATION_TEXT}</legend>
 					<Input
 						minLength={2}
 						type='text'
-						labelText='Name'
+						labelText={NAME}
 						onChange={onChangeName}
 					/>
-					<Input type='email' labelText='Email' onChange={onChangeEmail} />
+					<Input type='email' labelText={EMAIL} onChange={onChangeEmail} />
 					<Input
 						minLength={6}
 						type='password'
-						labelText='Password'
+						labelText={PASSWORD}
 						onChange={onChangePassword}
 					/>
-					<Button type='submit' buttonText='Registration' centered={true} />
+					<Button
+						type='submit'
+						buttonText={REGISTRATION_TEXT}
+						centered={true}
+					/>
 				</fieldset>
 			</form>
 			<p>
-				If you have an account you can <Link to='/login'>Login</Link>
+				If you have an account you can{' '}
+				<Link to='/login'>{BUTTON_LOGIN_TEXT}</Link>
 			</p>
 		</div>
 	);

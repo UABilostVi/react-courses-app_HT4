@@ -6,24 +6,26 @@ import { Button } from '../../../../common/Button';
 import { pipeDuration } from '../../../../helpers/pipeDuration';
 import { transformDate } from '../../../../helpers/dateGenerator';
 import { delCourseAction } from '../../../../store/courses/actionCreators';
+import { getAuthors } from './selectors';
 import { BUTTON_SHOW_COURSE_TEXT, EDIT, DELETE } from '../../../../constants';
 
 import './courseCard.css';
 
 const CourseCard = (props) => {
-	const authorsList = useSelector((state) => state.authors);
+	const course = props.course;
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const creationDate = transformDate(props.course.creationDate);
-	const durationTime = pipeDuration(props.course.duration);
-
-	let courseAuthorsList = props.course.authors.map((authorId) => {
+	const authorsList = useSelector(getAuthors);
+	const creationDate = transformDate(course.creationDate);
+	const durationTime = pipeDuration(course.duration);
+	// FIXME
+	let courseAuthorsList = course.authors.map((authorId) => {
 		let a = authorsList.find(({ id }) => {
 			return id === authorId;
 		});
 		return a;
 	});
-
+	// FIXME
 	let courseAuthors = courseAuthorsList.map((author, index, array) => {
 		if (index + 1 === array.length) {
 			return <span key={author.id}>{author.name}</span>;
@@ -31,18 +33,18 @@ const CourseCard = (props) => {
 	});
 
 	function onShowCourse() {
-		navigate(`${props.course.id}`);
+		navigate(`${course.id}`);
 	}
 
 	function onDelCourse() {
-		dispatch(delCourseAction(props.course.id));
+		dispatch(delCourseAction(course.id));
 	}
 
 	return (
 		<div className='course-card'>
 			<div className='course-card__info'>
-				<h2 className='course-card__title'>{props.course.title}</h2>
-				<p className='course-card__desc'>{props.course.description}</p>
+				<h2 className='course-card__title'>{course.title}</h2>
+				<p className='course-card__desc'>{course.description}</p>
 			</div>
 			<div className='course-card__details'>
 				<div className='course-card__authors'>
@@ -59,11 +61,7 @@ const CourseCard = (props) => {
 				</div>
 				<div className='course-card__buttons-holder'>
 					<Button buttonText={BUTTON_SHOW_COURSE_TEXT} onClick={onShowCourse} />
-					<Button
-						serviceButton={true}
-						buttonText={EDIT}
-						// onClick={onEditCourse}
-					/>
+					<Button serviceButton={true} buttonText={EDIT} />
 					<Button
 						serviceButton={true}
 						buttonText={DELETE}

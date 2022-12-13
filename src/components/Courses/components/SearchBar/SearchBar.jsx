@@ -8,9 +8,9 @@ import './searchBar.css';
 
 const SearchBar = (props) => {
 	return (
-		<form className='search-wrapper' onSubmit={props.handleSubmit}>
+		<form className='search-wrapper' onSubmit={props.onSubmit}>
 			<Input
-				onChange={props.handleChange}
+				onChange={props.onChange}
 				type='text'
 				id='search'
 				placeholder={SEARCH_PLCHDR}

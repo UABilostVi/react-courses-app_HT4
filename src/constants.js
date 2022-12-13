@@ -1,39 +1,24 @@
-const USER_NAME = 'Vit';
-const BUTTON_SEARCH_TEXT = 'Search';
-const BUTTON_ADD_COURSE_TEXT = 'Add new course';
-const BUTTON_SHOW_COURSE_TEXT = 'Show course';
-const BUTTON_CREATE_COURSE_TEXT = 'Create course';
-const BUTTON_LOGOUT_TEXT = 'Logout';
-const BUTTON_ADD_AUTHOR_TEXT = 'Add author';
-const BUTTON_DEL_AUTHOR_TEXT = 'Del author';
-const BUTTON_CREATE_AUTHOR_TEXT = 'Create author';
-const SEARCH_PLCHDR = 'Enter course name...';
-const FILL_ALERT = 'Please, fill all fields';
-const CHARS_ALERT = `Author's name Must be at least 2 characters`;
-const TITLE_PLCHDR = 'Enter title...';
-const DESCR_PLCHDR = 'Enter description';
-const DUR_PLCHDR = 'Enter duration in minutes...';
-const AUTHOR_PLCHDR = 'Enter author name...';
-const EDIT = 'Edit';
-const DELETE = 'Delete';
-
-export {
-	SEARCH_PLCHDR,
-	USER_NAME,
-	BUTTON_SEARCH_TEXT,
-	BUTTON_ADD_COURSE_TEXT,
-	BUTTON_SHOW_COURSE_TEXT,
-	BUTTON_LOGOUT_TEXT,
-	BUTTON_CREATE_COURSE_TEXT,
-	BUTTON_ADD_AUTHOR_TEXT,
-	BUTTON_DEL_AUTHOR_TEXT,
-	BUTTON_CREATE_AUTHOR_TEXT,
-	FILL_ALERT,
-	CHARS_ALERT,
-	TITLE_PLCHDR,
-	DESCR_PLCHDR,
-	DUR_PLCHDR,
-	AUTHOR_PLCHDR,
-	EDIT,
-	DELETE,
-};
+export const BUTTON_SEARCH_TEXT = 'Search';
+export const BUTTON_ADD_COURSE_TEXT = 'Add new course';
+export const BUTTON_SHOW_COURSE_TEXT = 'Show course';
+export const BUTTON_CREATE_COURSE_TEXT = 'Create course';
+export const BUTTON_LOGOUT_TEXT = 'Logout';
+export const BUTTON_LOGIN_TEXT = 'Login';
+export const REGISTRATION_TEXT = 'Registration';
+export const BUTTON_ADD_AUTHOR_TEXT = 'Add author';
+export const BUTTON_DEL_AUTHOR_TEXT = 'Del author';
+export const BUTTON_CREATE_AUTHOR_TEXT = 'Create author';
+export const SEARCH_PLCHDR = 'Enter course name...';
+export const TITLE_PLCHDR = 'Enter title...';
+export const DESCR_PLCHDR = 'Enter description';
+export const DUR_PLCHDR = 'Enter duration in minutes...';
+export const AUTHOR_PLCHDR = 'Enter author name...';
+export const EDIT = 'Edit';
+export const DELETE = 'Delete';
+export const PASSWORD = 'Password';
+export const EMAIL = 'Email';
+export const NAME = 'Name';
+export const TITLE = 'Title';
+export const BACK_TO_COURSES = 'Back to courses';
+export const CHARS_ALERT = `Author's name Must be at least 2 characters`;
+export const FILL_ALERT = 'Please, fill all fields';

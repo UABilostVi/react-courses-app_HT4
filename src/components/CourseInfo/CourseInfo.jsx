@@ -4,24 +4,24 @@ import { useSelector } from 'react-redux';
 
 import { pipeDuration } from '../../helpers/pipeDuration';
 import { transformDate } from '../../helpers/dateGenerator';
-import // mockedCoursesList as coursesList,
-// mockedAuthorsList as authorsList,
-'../../constants';
+import { getCourses, getAuthors } from './selectors';
+import { BACK_TO_COURSES } from '../../constants';
 
 import './courseInfo.css';
 
 const CourseInfo = () => {
-	let coursesList = useSelector((state) => state.courses);
-	let authorsList = useSelector((state) => state.authors);
+	const courses = useSelector(getCourses);
+	const authors = useSelector(getAuthors);
 	const { courseId } = useParams();
-	const course = coursesList.find((course) => {
+	const course = courses.find((course) => {
 		return course.id === courseId;
 	});
-	const duration = pipeDuration(course.duration);
 	const createdDate = transformDate(course.creationDate);
-	const authors = course.authors
+	const duration = pipeDuration(course.duration);
+	//FIXME
+	const authorsList = course.authors
 		.map((authorId) => {
-			return authorsList.find(({ id }) => {
+			return authors.find(({ id }) => {
 				return id === authorId;
 			});
 		})
@@ -31,10 +31,11 @@ const CourseInfo = () => {
 			}
 			return author.name + ', ';
 		});
+
 	return (
 		<div className='container'>
 			<div className='course-info__wrapper'>
-				<Link to='/courses'>Back to courses</Link>
+				<Link to='/courses'>{BACK_TO_COURSES}</Link>
 				<h2 className='course-info__title'>{course.title}</h2>
 				<div className='course-info'>
 					<p className='course-info__desc'>{course.description}</p>
@@ -53,7 +54,7 @@ const CourseInfo = () => {
 						</div>
 						<div className='course-info__authors'>
 							<strong>Authors: </strong>
-							<div className='course-info__authors-wrapper'>{authors}</div>
+							<div className='course-info__authors-wrapper'>{authorsList}</div>
 						</div>
 					</div>
 				</div>

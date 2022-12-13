@@ -2,14 +2,13 @@ import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import { Header } from './components/Header';
+import { Login } from './components/Login';
+import { Registration } from './components/Registration';
 import { Courses } from './components/Courses';
 import { CreateCourse } from './components/CreateCourse';
-import { Header } from './components/Header';
-import { Registration } from './components/Registration';
-import { Login } from './components/Login';
 import { CourseInfo } from './components/CourseInfo';
-
-import { getAllCourses, getAllAuthors } from './services';
+import { fetchAllCourses, fetchAllAuthors } from './services';
 import { setCoursesAction } from './store/courses/actionCreators';
 import { setAuthorsAction } from './store/authors/actionCreators';
 import { logInAction } from './store/user/actionCreators';
@@ -18,30 +17,30 @@ import './App.css';
 
 function App() {
 	const dispatch = useDispatch();
-	const token = JSON.parse(localStorage.getItem('userToken'));
 	const navigate = useNavigate();
+	const token = JSON.parse(localStorage.getItem('userToken'));
 
 	useEffect(() => {
-		checkIsAuth();
-		fetchAuthors();
-		fetchCourses();
+		checkToken();
+		getAuthors();
+		getCourses();
 	}, []);
 
-	async function checkIsAuth() {
-		if (!!token) {
+	function checkToken() {
+		if (token) {
 			dispatch(logInAction(token));
 		} else {
 			navigate('login');
 		}
 	}
 
-	async function fetchCourses() {
-		const courses = await getAllCourses();
+	async function getCourses() {
+		const courses = await fetchAllCourses();
 		dispatch(setCoursesAction(courses));
 	}
 
-	async function fetchAuthors() {
-		const authors = await getAllAuthors();
+	async function getAuthors() {
+		const authors = await fetchAllAuthors();
 		dispatch(setAuthorsAction(authors));
 	}
 

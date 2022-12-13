@@ -6,8 +6,12 @@ import { Input } from '../../common/Input';
 import { Button } from '../../common/Button';
 import { logInAction } from '../../store/user/actionCreators';
 import { fetchLogin } from '../../services';
-
-import './login.css';
+import {
+	REGISTRATION_TEXT,
+	BUTTON_LOGIN_TEXT,
+	PASSWORD,
+	EMAIL,
+} from '../../constants';
 
 const Login = () => {
 	let [email, setEmail] = useState('');
@@ -15,7 +19,7 @@ const Login = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const submitHandler = async (e) => {
+	async function onSubmit(e) {
 		e.preventDefault();
 
 		let loginPayload = {
@@ -35,7 +39,7 @@ const Login = () => {
 		localStorage.setItem('userToken', JSON.stringify(storePayload));
 		dispatch(logInAction(storePayload));
 		navigate('/courses');
-	};
+	}
 
 	function onChangeEmail(e) {
 		setEmail(e.target.value);
@@ -47,21 +51,25 @@ const Login = () => {
 
 	return (
 		<div className='auth-wrapper'>
-			<form onSubmit={submitHandler}>
+			<form onSubmit={onSubmit}>
 				<fieldset>
 					<legend className='text-center'>Login</legend>
-					<Input type='email' labelText='Email' onChange={onChangeEmail} />
+					<Input type='email' labelText={EMAIL} onChange={onChangeEmail} />
 					<Input
 						type='password'
-						labelText='Password'
+						labelText={PASSWORD}
 						onChange={onChangePassword}
 					/>
-					<Button type='submit' buttonText='Login' centered={true} />
+					<Button
+						type='submit'
+						buttonText={BUTTON_LOGIN_TEXT}
+						centered={true}
+					/>
 				</fieldset>
 			</form>
 			<p>
 				If you have an account you can{' '}
-				<Link to='/registration'>Registration</Link>
+				<Link to='/registration'>{REGISTRATION_TEXT}</Link>
 			</p>
 		</div>
 	);
