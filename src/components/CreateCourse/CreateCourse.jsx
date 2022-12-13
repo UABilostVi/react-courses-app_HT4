@@ -9,6 +9,7 @@ import { AuthorListItem } from './components/CreateCourseDetails/components/Auth
 import { getCreationDate } from '../../helpers/dateGenerator';
 import { createAuthorAction } from '../../store/authors/actionCreators';
 import { addCourseAction } from '../../store/courses/actionCreators';
+// import { createAuthor } from '../../services';
 import {
 	BUTTON_ADD_AUTHOR_TEXT,
 	BUTTON_DEL_AUTHOR_TEXT,
@@ -41,6 +42,7 @@ const CreateCourse = () => {
 		}
 		let newAuthor = { id: uuidv4(), name: name };
 		dispatch(createAuthorAction(newAuthor));
+		// createAuthor(newAuthor);
 		setName('');
 	}
 

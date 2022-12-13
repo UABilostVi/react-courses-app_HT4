@@ -1,30 +1,6 @@
 import axios from 'axios';
 
-const getAllCourses = async () => {
-	let courses = await axios
-		.get('http://localhost:4000/courses/all')
-		.then((response) => {
-			return response.data.result;
-		})
-		.catch((err) => {
-			alert(err.message);
-		});
-	return courses;
-};
-
-const getAllAuthors = async () => {
-	let authors = await axios
-		.get('http://localhost:4000/authors/all')
-		.then((response) => {
-			return response.data.result;
-		})
-		.catch((err) => {
-			alert(err.message);
-		});
-	return authors;
-};
-
-const fetchLogin = async (loginPayload) => {
+export const fetchLogin = async (loginPayload) => {
 	let res = await axios
 		.post('http://localhost:4000/login', loginPayload)
 		.then((response) => {
@@ -36,7 +12,7 @@ const fetchLogin = async (loginPayload) => {
 	return res;
 };
 
-const fetchRegistr = async (newUser) => {
+export const fetchRegistr = async (newUser) => {
 	let res = await axios
 		.post('http://localhost:4000/register', newUser)
 		.then((response) => {
@@ -48,4 +24,42 @@ const fetchRegistr = async (newUser) => {
 	return res;
 };
 
-export { getAllCourses, getAllAuthors, fetchLogin, fetchRegistr };
+export const getAllCourses = async () => {
+	let courses = await axios
+		.get('http://localhost:4000/courses/all')
+		.then((response) => {
+			return response.data.result;
+		})
+		.catch((err) => {
+			alert(err.message);
+		});
+	return courses;
+};
+
+export const getAllAuthors = async () => {
+	let authors = await axios
+		.get('http://localhost:4000/authors/all')
+		.then((response) => {
+			return response.data.result;
+		})
+		.catch((err) => {
+			alert(err.message);
+		});
+	return authors;
+};
+
+// export const createAuthor = async (newAuthor) => {
+// 	const token = JSON.parse(localStorage.getItem('userToken'));
+// 	await axios
+// 		.post('http://localhost:4000/authors/add', newAuthor, {
+// 			headers: {
+// 				Authorization: `${token.token}`,
+// 			},
+// 		})
+// 		.then((res) => {
+// 			return res;
+// 		})
+// 		.catch((err) => {
+// 			alert(err.message);
+// 		});
+// };

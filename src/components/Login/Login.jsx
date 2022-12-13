@@ -34,7 +34,6 @@ const Login = () => {
 
 		localStorage.setItem('userToken', JSON.stringify(storePayload));
 		dispatch(logInAction(storePayload));
-		console.log('In Login', storePayload);
 		navigate('/courses');
 	};
 

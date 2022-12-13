@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { Courses } from './components/Courses';
 import { CreateCourse } from './components/CreateCourse';
@@ -19,7 +19,7 @@ import './App.css';
 function App() {
 	const dispatch = useDispatch();
 	const token = JSON.parse(localStorage.getItem('userToken'));
-	let isAuth = useSelector((state) => state.user.isAuth);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		checkIsAuth();
@@ -28,8 +28,10 @@ function App() {
 	}, []);
 
 	async function checkIsAuth() {
-		if (token) {
+		if (!!token) {
 			dispatch(logInAction(token));
+		} else {
+			navigate('login');
 		}
 	}
 
@@ -49,25 +51,14 @@ function App() {
 			<main className='main'>
 				<Routes>
 					<Route path='*' element={<h1>Page not found</h1>} />
-					<Route
-						path='/'
-						element={
-							token ? <Navigate to='/courses' /> : <Navigate to='/login' />
-						}
-					/>
+					<Route path='/' element={<Navigate to='/courses' />} />
 					<Route path='registration' element={<Registration />} />
 					<Route
 						path='login'
 						element={token ? <Navigate to='/courses' /> : <Login />}
 					/>
-					<Route
-						path='courses'
-						element={token ? <Courses /> : <Navigate to='/login' />}
-					/>
-					<Route
-						path='courses/add'
-						element={token ? <CreateCourse /> : <Navigate to='/login' />}
-					/>
+					<Route path='courses' element={<Courses />} />
+					<Route path='courses/add' element={<CreateCourse />} />
 					<Route path='courses/:courseId' element={<CourseInfo />} />
 				</Routes>
 			</main>
