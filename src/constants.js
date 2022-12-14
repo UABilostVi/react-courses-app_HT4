@@ -19,6 +19,15 @@ export const PASSWORD = 'Password';
 export const EMAIL = 'Email';
 export const NAME = 'Name';
 export const TITLE = 'Title';
+export const DURATION = 'Duration';
+export const AUTHOR_NAME_TEXT = 'Author name';
 export const BACK_TO_COURSES = 'Back to courses';
 export const CHARS_ALERT = `Author's name Must be at least 2 characters`;
 export const FILL_ALERT = 'Please, fill all fields';
+export const EMPTY_AUTHORS_LIST = 'Author list is empty';
+
+export const DESC_MIN_LENGTH = 2;
+export const DESCR_ROWS = 5;
+export const MIN_TIME = 0;
+export const TITLE_MIN_LENGTH = 2;
+export const NAME_MIN_LENGTH = 2;

@@ -1,20 +1,23 @@
 import React from 'react';
 
-import { Button } from '../../../../../../common/Button';
+import { Button } from '../../../../common/Button';
 
 const AuthorListItem = (props) => {
 	function addHandler() {
-		let newCourseAuthor = { id: props.id, name: props.name };
+		let newCourseAuthor = { id: author.id, name: author.name };
 		return props.onClickHand(newCourseAuthor);
 	}
+
+	const author = props.author;
+
 	return (
 		<div
-			key={props.id}
-			id={props.id}
-			title={props.name}
+			key={author.id}
+			id={author.id}
+			title={author.name}
 			className='author-item'
 		>
-			<span className='author-item-name'>{props.name}</span>
+			<span className='author-item-name'>{author.name}</span>
 			<Button
 				type='button'
 				buttonText={props.buttonText}

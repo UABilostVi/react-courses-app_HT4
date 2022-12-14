@@ -7,6 +7,9 @@ import {
 	DESCR_PLCHDR,
 	TITLE,
 	BUTTON_CREATE_COURSE_TEXT,
+	DESC_MIN_LENGTH,
+	DESCR_ROWS,
+	TITLE_MIN_LENGTH,
 } from '../../../../constants';
 
 import './createCourseMain.css';
@@ -20,7 +23,7 @@ const CreateCourseMain = () => {
 					labelText={TITLE}
 					type='text'
 					placeholder={TITLE_PLCHDR}
-					minLength={2}
+					minLength={TITLE_MIN_LENGTH}
 				/>
 				<Button buttonText={BUTTON_CREATE_COURSE_TEXT} type='submit' />
 			</div>
@@ -29,8 +32,8 @@ const CreateCourseMain = () => {
 					name='description'
 					className='create-course__desc'
 					placeholder={DESCR_PLCHDR}
-					rows={5}
-					minLength={2}
+					rows={DESCR_ROWS}
+					minLength={DESC_MIN_LENGTH}
 				></textarea>
 			</div>
 		</div>
