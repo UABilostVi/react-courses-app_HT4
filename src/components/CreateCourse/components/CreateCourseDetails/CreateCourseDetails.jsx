@@ -17,11 +17,13 @@ const CreateCourseDetails = (props) => {
 	let authors = useSelector(getAuthors);
 	let [courseAuthors, setCourseAuthors] = useState([]);
 	let [allAuthors, setAllAuthors] = useState([]);
-	console.log('courseAuthors: ', courseAuthors);
-	console.log('ALL AUTHORS', allAuthors);
 
 	useEffect(() => {
-		setAllAuthors(authors);
+		let courseAuthorsId = courseAuthors.map((item) => item.id);
+		let updatedAuthorsList = authors.filter((item) => {
+			return !courseAuthorsId.includes(item.id);
+		});
+		setAllAuthors(updatedAuthorsList);
 	}, [authors]);
 
 	useEffect(() => {
