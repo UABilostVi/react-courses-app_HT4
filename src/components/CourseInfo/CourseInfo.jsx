@@ -13,24 +13,17 @@ const CourseInfo = () => {
 	const courses = useSelector(getCourses);
 	const authors = useSelector(getAuthors);
 	const { courseId } = useParams();
-	const course = courses.find((course) => {
-		return course.id === courseId;
-	});
+	const course = courses.find((course) => course.id === courseId);
 	const createdDate = transformDate(course.creationDate);
 	const duration = pipeDuration(course.duration);
-	//FIXME
-	const authorsList = course.authors
-		.map((authorId) => {
-			return authors.find(({ id }) => {
-				return id === authorId;
-			});
-		})
-		.map((author, index, array) => {
-			if (index + 1 === array.length) {
-				return author.name;
-			}
-			return author.name + ', ';
-		});
+
+	const courseAuthors = course.authors.map((authorId) => {
+		return authors.find(({ id }) => id === authorId);
+	});
+
+	const courseAuthorsList = courseAuthors.map((author, index, array) => {
+		return index + 1 === array.length ? author.name : author.name + ', ';
+	});
 
 	return (
 		<div className='container'>
@@ -54,7 +47,9 @@ const CourseInfo = () => {
 						</div>
 						<div className='course-info__authors'>
 							<strong>Authors: </strong>
-							<div className='course-info__authors-wrapper'>{authorsList}</div>
+							<div className='course-info__authors-wrapper'>
+								{courseAuthorsList}
+							</div>
 						</div>
 					</div>
 				</div>

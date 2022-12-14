@@ -15,21 +15,16 @@ const CourseCard = (props) => {
 	const course = props.course;
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const authorsList = useSelector(getAuthors);
+	const authors = useSelector(getAuthors);
 	const creationDate = transformDate(course.creationDate);
 	const durationTime = pipeDuration(course.duration);
-	// FIXME
-	let courseAuthorsList = course.authors.map((authorId) => {
-		let a = authorsList.find(({ id }) => {
-			return id === authorId;
-		});
-		return a;
+
+	const courseAuthors = course.authors.map((authorId) => {
+		return authors.find(({ id }) => id === authorId);
 	});
-	// FIXME
-	let courseAuthors = courseAuthorsList.map((author, index, array) => {
-		if (index + 1 === array.length) {
-			return <span key={author.id}>{author.name}</span>;
-		} else return <span key={author.id}>{author.name}, </span>;
+
+	const courseAuthorsList = courseAuthors.map((author, index, array) => {
+		return index + 1 === array.length ? author.name : author.name + ', ';
 	});
 
 	function onShowCourse() {
@@ -49,7 +44,9 @@ const CourseCard = (props) => {
 			<div className='course-card__details'>
 				<div className='course-card__authors'>
 					<strong>Authors: </strong>
-					<div className='course-card__authors-wrapper'>{courseAuthors}</div>
+					<div className='course-card__authors-wrapper'>
+						{courseAuthorsList}
+					</div>
 				</div>
 				<div>
 					<strong>Duration: </strong>

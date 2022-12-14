@@ -51,7 +51,10 @@ function App() {
 				<Routes>
 					<Route path='*' element={<h1>Page not found</h1>} />
 					<Route path='/' element={<Navigate to='/courses' />} />
-					<Route path='registration' element={<Registration />} />
+					<Route
+						path='registration'
+						element={token ? <Navigate to='/courses' /> : <Registration />}
+					/>
 					<Route
 						path='login'
 						element={token ? <Navigate to='/courses' /> : <Login />}

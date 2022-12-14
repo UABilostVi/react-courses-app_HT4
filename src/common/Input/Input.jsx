@@ -17,6 +17,7 @@ const Input = (props) => {
 				required={props.required}
 				min={props.min}
 				minLength={props.minLength}
+				ref={props.refer}
 			/>
 		</label>
 	);

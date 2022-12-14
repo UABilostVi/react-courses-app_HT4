@@ -14,13 +14,13 @@ import {
 import './createCourseDetails.css';
 
 const CreateCourseDetails = (props) => {
-	let authors = useSelector(getAuthors);
-	let [courseAuthors, setCourseAuthors] = useState([]);
-	let [allAuthors, setAllAuthors] = useState([]);
+	const authors = useSelector(getAuthors);
+	const [courseAuthors, setCourseAuthors] = useState([]);
+	const [allAuthors, setAllAuthors] = useState([]);
 
 	useEffect(() => {
-		let courseAuthorsId = courseAuthors.map((item) => item.id);
-		let updatedAuthorsList = authors.filter((item) => {
+		const courseAuthorsId = courseAuthors.map((item) => item.id);
+		const updatedAuthorsList = authors.filter((item) => {
 			return !courseAuthorsId.includes(item.id);
 		});
 		setAllAuthors(updatedAuthorsList);

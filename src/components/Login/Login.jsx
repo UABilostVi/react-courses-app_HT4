@@ -14,22 +14,22 @@ import {
 } from '../../constants';
 
 const Login = () => {
-	let [email, setEmail] = useState('');
-	let [password, setPassword] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	async function onSubmit(e) {
 		e.preventDefault();
 
-		let loginPayload = {
+		const loginPayload = {
 			email: email,
 			password: password,
 		};
 
-		let res = await fetchLogin(loginPayload);
+		const res = await fetchLogin(loginPayload);
 
-		let storePayload = {
+		const storePayload = {
 			isAuth: true,
 			name: res.data.user.name,
 			email: res.data.user.email,

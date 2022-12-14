@@ -7,7 +7,7 @@ import { DUR_PLCHDR, MIN_TIME, DURATION } from '../../../../constants';
 import './duration.css';
 
 const Duration = () => {
-	let [time, setTime] = useState(MIN_TIME);
+	const [time, setTime] = useState(MIN_TIME);
 	const durationTime = pipeDuration(time);
 
 	function onChangeTime(e) {

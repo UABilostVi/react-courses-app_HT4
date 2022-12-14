@@ -3,12 +3,12 @@ import React from 'react';
 import { Button } from '../../../../common/Button';
 
 const AuthorListItem = (props) => {
+	const author = props.author;
+
 	function addHandler() {
-		let newCourseAuthor = { id: author.id, name: author.name };
+		const newCourseAuthor = { id: author.id, name: author.name };
 		return props.onClickHand(newCourseAuthor);
 	}
-
-	const author = props.author;
 
 	return (
 		<div

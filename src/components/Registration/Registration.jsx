@@ -13,14 +13,14 @@ import {
 } from '../../constants';
 
 const Registration = () => {
-	let [name, setName] = useState('');
-	let [email, setEmail] = useState('');
-	let [password, setPassword] = useState('');
+	const [name, setName] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 	const navigate = useNavigate();
 
 	function submitHandler(e) {
 		e.preventDefault();
-		let newUser = {
+		const newUser = {
 			name: name,
 			email: email,
 			password: password,

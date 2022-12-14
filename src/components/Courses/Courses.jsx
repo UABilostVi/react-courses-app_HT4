@@ -12,8 +12,8 @@ import './courses.css';
 
 const Courses = () => {
 	const navigate = useNavigate();
-	let courses = useSelector(getCourses);
-	let [searchText, setSearchText] = useState('');
+	const courses = useSelector(getCourses);
+	const [searchText, setSearchText] = useState('');
 
 	function onAddCourse() {
 		navigate('/courses/add');
@@ -21,7 +21,7 @@ const Courses = () => {
 
 	function onSubmit(e) {
 		e.preventDefault();
-		setSearchText(e.target.elements.search.value.toLowerCase()); //FIXME
+		setSearchText(e.target.elements.search.value.toLowerCase());
 	}
 
 	function onChange(e) {
@@ -29,15 +29,15 @@ const Courses = () => {
 			setSearchText(e.target.value);
 		}
 	}
-	//FIXME
-	let filteredCourses = courses.filter((course) => {
+
+	const filteredCourses = courses.filter((course) => {
 		return (
 			course.title.toLowerCase().includes(searchText) ||
 			course.id.toLowerCase().includes(searchText)
 		);
 	});
-	//FIXME
-	let coursesList = filteredCourses.map((course) => {
+
+	const coursesList = filteredCourses.map((course) => {
 		return <CourseCard key={course.id} course={course} />;
 	});
 

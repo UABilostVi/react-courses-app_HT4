@@ -13,11 +13,9 @@ import {
 	AUTHOR_NAME_TEXT,
 } from '../../../../constants';
 
-import './addAuthor.css';
-
 const AddAuthor = () => {
 	const dispatch = useDispatch();
-	let [name, setName] = useState('');
+	const [name, setName] = useState('');
 
 	function onChange(e) {
 		setName(e.target.value);
