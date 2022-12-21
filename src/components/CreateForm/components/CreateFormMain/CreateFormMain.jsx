@@ -12,13 +12,14 @@ import {
 	TITLE_MIN_LENGTH,
 } from '../../../../constants';
 
-import './createCourseMain.css';
+import classes from './CreateFormMain.module.css';
 
-const CreateCourseMain = () => {
+const CreateFormMain = (props) => {
 	return (
-		<div className='create-course__main'>
-			<div className='create-course__title-holder create-course__main-item'>
+		<div>
+			<div className={classes.item}>
 				<Input
+					defaultValue={props?.data?.title}
 					name='title'
 					labelText={TITLE}
 					type='text'
@@ -27,10 +28,11 @@ const CreateCourseMain = () => {
 				/>
 				<Button buttonText={BUTTON_CREATE_COURSE_TEXT} type='submit' />
 			</div>
-			<div className='create-course__main-item'>
+			<div className={classes.item}>
 				<textarea
+					defaultValue={props?.data?.description}
 					name='description'
-					className='create-course__desc'
+					className={classes.description}
 					placeholder={DESCR_PLCHDR}
 					rows={DESCR_ROWS}
 					minLength={DESC_MIN_LENGTH}
@@ -40,4 +42,4 @@ const CreateCourseMain = () => {
 	);
 };
 
-export default CreateCourseMain;
+export default CreateFormMain;

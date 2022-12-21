@@ -1,0 +1,11 @@
+.item {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.description {
+  width: 100%;
+  padding: 5px;
+}

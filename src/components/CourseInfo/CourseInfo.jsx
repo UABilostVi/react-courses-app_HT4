@@ -1,21 +1,40 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { pipeDuration } from '../../helpers/pipeDuration';
 import { transformDate } from '../../helpers/dateGenerator';
-import { getCourses, getAuthors } from './selectors';
+import { selectCourses, selectAuthors } from './selectors';
 import { BACK_TO_COURSES } from '../../constants';
 
-import './courseInfo.css';
+import classes from './CourseInfo.module.css';
+
+import { getCourses } from '../../store/courses/thunk';
+import { getAuthors } from '../../store/authors/thunk';
+// import { currentUserThunk } from '../../store/user/thunk';
 
 const CourseInfo = () => {
-	const courses = useSelector(getCourses);
-	const authors = useSelector(getAuthors);
+	// const navigate = useNavigate();
+	const dispatch = useDispatch();
+	// const token = localStorage.getItem('userToken');
+	const [course, setCourse] = useState(null);
+
+	const courses = useSelector(selectCourses);
+	const authors = useSelector(selectAuthors);
 	const { courseId } = useParams();
-	const course = courses.find((course) => course.id === courseId);
+	// const course = courses.find((course) => course.id === courseId);
 	const createdDate = transformDate(course.creationDate);
 	const duration = pipeDuration(course.duration);
+
+	useEffect(() => {
+		console.log('fgf');
+		dispatch(getAuthors());
+		dispatch(getCourses());
+	}, []);
+
+	useEffect(() => {
+		setCourse(courses.find((course) => course.id === courseId));
+	}, [courseId]);
 
 	const courseAuthors = course.authors.map((authorId) => {
 		return authors.find(({ id }) => id === authorId);
@@ -27,12 +46,12 @@ const CourseInfo = () => {
 
 	return (
 		<div className='container'>
-			<div className='course-info__wrapper'>
+			<div className={classes.wrapper}>
 				<Link to='/courses'>{BACK_TO_COURSES}</Link>
-				<h2 className='course-info__title'>{course.title}</h2>
-				<div className='course-info'>
-					<p className='course-info__desc'>{course.description}</p>
-					<div className='course-info__details'>
+				<h2 className={classes.title}>{course.title}</h2>
+				<div className={classes.info}>
+					<p className={classes.description}>{course.description}</p>
+					<div className={classes.details}>
 						<div>
 							<strong>ID: </strong>
 							{courseId}
@@ -45,11 +64,9 @@ const CourseInfo = () => {
 							<strong>Created: </strong>
 							{createdDate}
 						</div>
-						<div className='course-info__authors'>
+						<div>
 							<strong>Authors: </strong>
-							<div className='course-info__authors-wrapper'>
-								{courseAuthorsList}
-							</div>
+							<div className={classes.authorsWrapper}>{courseAuthorsList}</div>
 						</div>
 					</div>
 				</div>

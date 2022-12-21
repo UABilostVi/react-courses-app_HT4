@@ -1,0 +1,12 @@
+.details {
+  display: flex;
+  gap: 20px;
+}
+
+.col {
+  width: 50%;
+}
+
+.title {
+  text-align: center;
+}

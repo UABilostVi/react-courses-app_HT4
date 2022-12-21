@@ -1,49 +1,71 @@
 import axios from 'axios';
 
-export const fetchLogin = async (loginPayload) => {
-	let res = await axios
-		.post('http://localhost:4000/login', loginPayload)
-		.then((response) => {
-			return response;
-		})
-		.catch(() => {
-			alert('Invalid user password or email');
-		});
-	return res;
-};
+const axs = axios.create({
+	baseURL: 'http://localhost:4000',
+});
 
-export const fetchRegistr = async (newUser) => {
-	let res = await axios
-		.post('http://localhost:4000/register', newUser)
-		.then((response) => {
-			return response;
-		})
-		.catch(() => {
-			alert('Wrong data');
-		});
-	return res;
-};
+export const serviceAPI = {
+	fetchLogin(loginPayload) {
+		return axs.post('login', loginPayload);
+	},
 
-export const fetchAllCourses = async () => {
-	let courses = await axios
-		.get('http://localhost:4000/courses/all')
-		.then((response) => {
-			return response.data.result;
-		})
-		.catch((err) => {
-			alert(err.message);
+	fetchLogout() {
+		return axs.delete('logout', {
+			headers: {
+				Authorization: `${localStorage.getItem('userToken')}`,
+			},
 		});
-	return courses;
-};
+	},
 
-export const fetchAllAuthors = async () => {
-	let authors = await axios
-		.get('http://localhost:4000/authors/all')
-		.then((response) => {
-			return response.data.result;
-		})
-		.catch((err) => {
-			alert(err.message);
+	fetchRegistr(newUser) {
+		return axs.post('register', newUser);
+	},
+
+	fetchAllCourses() {
+		return axs.get('courses/all');
+	},
+
+	fetchAllAuthors() {
+		return axs.get('authors/all');
+	},
+
+	fetchCurrentUser() {
+		return axs.get('users/me', {
+			headers: {
+				Authorization: `${localStorage.getItem('userToken')}`,
+			},
 		});
-	return authors;
+	},
+
+	fetchDelCourse(courseId) {
+		return axs.delete(`courses/${courseId}`, {
+			headers: {
+				Authorization: `${localStorage.getItem('userToken')}`,
+			},
+		});
+	},
+
+	fetchCreateCourse(course) {
+		return axs.post(`courses/add`, course, {
+			headers: {
+				Authorization: `${localStorage.getItem('userToken')}`,
+			},
+		});
+	},
+
+	fetchCreateAuthor(author) {
+		return axs.post(`authors/add`, author, {
+			headers: {
+				Authorization: `${localStorage.getItem('userToken')}`,
+			},
+		});
+	},
+
+	fetchUpdateCourse(course) {
+		return axs.put(`courses/id`, course, {
+			headers: {
+				Authorization: `${localStorage.getItem('userToken')}`,
+			},
+		});
+	},
 };

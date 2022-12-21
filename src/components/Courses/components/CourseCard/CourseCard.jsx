@@ -3,21 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from '../../../../common/Button';
+
 import { pipeDuration } from '../../../../helpers/pipeDuration';
 import { transformDate } from '../../../../helpers/dateGenerator';
-import { delCourseAction } from '../../../../store/courses/actionCreators';
-import { getAuthors } from './selectors';
+
+import { delCourse } from '../../../../store/courses/thunk';
+import { selectAuthors } from './selectors';
+import { ProtectedContent } from '../../../ProtectedContent';
 import { BUTTON_SHOW_COURSE_TEXT, EDIT, DELETE } from '../../../../constants';
 
-import './courseCard.css';
+import classes from './CourseCard.module.css';
 
 const CourseCard = (props) => {
 	const course = props.course;
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const authors = useSelector(getAuthors);
 	const creationDate = transformDate(course.creationDate);
 	const durationTime = pipeDuration(course.duration);
+	const authors = useSelector(selectAuthors);
 
 	const courseAuthors = course.authors.map((authorId) => {
 		return authors.find(({ id }) => id === authorId);
@@ -32,21 +35,23 @@ const CourseCard = (props) => {
 	}
 
 	function onDelCourse() {
-		dispatch(delCourseAction(course.id));
+		dispatch(delCourse(course.id));
+	}
+
+	function onEdit() {
+		navigate(`/courses/update/${course.id}`);
 	}
 
 	return (
-		<div className='course-card'>
-			<div className='course-card__info'>
-				<h2 className='course-card__title'>{course.title}</h2>
-				<p className='course-card__desc'>{course.description}</p>
+		<div className={classes.courseCard}>
+			<div>
+				<h2 className={classes.courseTitle}>{course.title}</h2>
+				<p>{course.description}</p>
 			</div>
-			<div className='course-card__details'>
-				<div className='course-card__authors'>
+			<div className={classes.courseDetails}>
+				<div className={classes.courseAuthors}>
 					<strong>Authors: </strong>
-					<div className='course-card__authors-wrapper'>
-						{courseAuthorsList}
-					</div>
+					<div className={classes.authorsWrapper}>{courseAuthorsList}</div>
 				</div>
 				<div>
 					<strong>Duration: </strong>
@@ -56,14 +61,16 @@ const CourseCard = (props) => {
 					<strong>Created: </strong>
 					{creationDate}
 				</div>
-				<div className='course-card__buttons-holder'>
+				<div className={classes.buttonsHolder}>
 					<Button buttonText={BUTTON_SHOW_COURSE_TEXT} onClick={onShowCourse} />
-					<Button serviceButton={true} buttonText={EDIT} />
-					<Button
-						serviceButton={true}
-						buttonText={DELETE}
-						onClick={onDelCourse}
-					/>
+					<ProtectedContent requiredRole='admin'>
+						<Button serviceButton={true} buttonText={EDIT} onClick={onEdit} />
+						<Button
+							serviceButton={true}
+							buttonText={DELETE}
+							onClick={onDelCourse}
+						/>
+					</ProtectedContent>
 				</div>
 			</div>
 		</div>

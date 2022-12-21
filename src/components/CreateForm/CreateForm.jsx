@@ -1,19 +1,27 @@
-import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { CreateCourseMain } from './components/CreateCourseMain';
-import { CreateCourseDetails } from './components/CreateCourseDetails';
+import { CreateFormMain } from './components/CreateFormMain';
+import { CreateFormDetails } from './components/CreateFormDetails';
+
 import { getCreationDate } from '../../helpers/dateGenerator';
-import { addCourseAction } from '../../store/courses/actionCreators';
+import { createCourse } from '../../store/courses/thunk';
+
 import { FILL_ALERT } from '../../constants';
 
-import './createCourse.css';
+import './createForm.css';
 
-const CreateCourse = () => {
+const CreateForm = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const { courseId } = useParams();
+	// const [data, setData] = useState([]);
+
+	const courses = useSelector((state) => state.courses);
+	const course = courses.find((course) => {
+		return course.id === courseId;
+	});
 
 	let courseAuthors;
 	function getCourseAuthors(data) {
@@ -30,11 +38,11 @@ const CreateCourse = () => {
 			alert(FILL_ALERT);
 			return;
 		}
-		createCourse(e);
+		CreateForm(e);
 		navigate('/courses');
 	}
 
-	function createCourse(e) {
+	function CreateForm(e) {
 		const newCourse = {
 			title: e.target.title.value,
 			description: e.target.description.value,
@@ -43,19 +51,18 @@ const CreateCourse = () => {
 			authors: courseAuthors.map((course) => {
 				return course.id;
 			}),
-			id: uuidv4(),
 		};
-		dispatch(addCourseAction(newCourse));
+		dispatch(createCourse(newCourse));
 	}
 
 	return (
 		<div className='container'>
 			<form onSubmit={onSubmit} className='create-course__wrapper'>
-				<CreateCourseMain />
-				<CreateCourseDetails getCourseAuthors={getCourseAuthors} />
+				<CreateFormMain data={course} />
+				<CreateFormDetails data={course} getCourseAuthors={getCourseAuthors} />
 			</form>
 		</div>
 	);
 };
 
-export default CreateCourse;
+export default CreateForm;

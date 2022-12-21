@@ -1,6 +1,11 @@
-import { SET_COURSES, DEL_COURSE, ADD_COURSE } from './actionTypes';
+import {
+	SET_COURSES,
+	DEL_COURSE,
+	ADD_COURSE,
+	UPDT_COURSE,
+} from './actionTypes';
 
-const coursesInitialState = []; // default value - empty array. After success getting courses from API - array of courses.
+const coursesInitialState = [];
 
 export const coursesReducer = (state = coursesInitialState, action) => {
 	switch (action.type) {
@@ -13,6 +18,11 @@ export const coursesReducer = (state = coursesInitialState, action) => {
 				...state.filter((course) => {
 					return course.id !== action.payload;
 				}),
+			];
+		case UPDT_COURSE:
+			return [
+				...state.filter((course) => course.id !== action.payload),
+				action.payload,
 			];
 		default:
 			return state;

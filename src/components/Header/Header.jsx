@@ -4,11 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { Button } from '../../common/Button';
 import { Logo } from './components/Logo';
-import { logOutAction } from '../../store/user/actionCreators';
+
+import { logoutThunk } from '../../store/user/thunk';
 import { getUserName, getIsAuth } from './selectors';
+
 import { BUTTON_LOGOUT_TEXT, BUTTON_LOGIN_TEXT } from '../../constants';
 
-import './header.css';
+import classes from './Header.module.css';
 
 const Header = () => {
 	const isAuth = useSelector(getIsAuth);
@@ -21,10 +23,8 @@ const Header = () => {
 		navigate('/login');
 	}
 
-	function onlogOut() {
-		localStorage.removeItem('userToken');
-		dispatch(logOutAction());
-		navigate('/login');
+	function onLogout() {
+		dispatch(logoutThunk(onLogin));
 	}
 
 	const renderLog =
@@ -33,19 +33,19 @@ const Header = () => {
 			: true;
 
 	return (
-		<header className='header'>
+		<header className={classes.header}>
 			<div className='container'>
-				<div className='header-warpper'>
-					<Logo className='logo' />
+				<div className={classes.wrapper}>
+					<Logo />
 					{renderLog && (
 						<>
 							{!isAuth && (
 								<Button buttonText={BUTTON_LOGIN_TEXT} onClick={onLogin} />
 							)}
 							{isAuth && (
-								<div className='header__logout'>
-									<div className='user-name'>{userName}</div>
-									<Button buttonText={BUTTON_LOGOUT_TEXT} onClick={onlogOut} />
+								<div className={classes.auth}>
+									<div>{userName}</div>
+									<Button buttonText={BUTTON_LOGOUT_TEXT} onClick={onLogout} />
 								</div>
 							)}
 						</>

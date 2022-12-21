@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 
 import { Input } from '../../../../common/Input';
 import { Button } from '../../../../common/Button';
-import { createAuthorAction } from '../../../../store/authors/actionCreators';
+
+import { createAuthor } from '../../../../store/authors/thunk';
+
 import {
 	BUTTON_CREATE_AUTHOR_TEXT,
 	AUTHOR_PLCHDR,
@@ -12,6 +13,8 @@ import {
 	NAME_MIN_LENGTH,
 	AUTHOR_NAME_TEXT,
 } from '../../../../constants';
+
+import classes from './AddAuthor.module.css';
 
 const AddAuthor = () => {
 	const dispatch = useDispatch();
@@ -26,14 +29,13 @@ const AddAuthor = () => {
 			alert(CHARS_ALERT);
 			return;
 		}
-		let newAuthor = { id: uuidv4(), name: name };
-		dispatch(createAuthorAction(newAuthor));
+		dispatch(createAuthor({ name }));
 		setName('');
 	}
 
 	return (
-		<fieldset className='create-course__add-author'>
-			<legend className='create-course__details-title'>Add author</legend>
+		<fieldset>
+			<legend className={classes.legend}>Add author</legend>
 			<Input
 				value={name}
 				name='authorName'

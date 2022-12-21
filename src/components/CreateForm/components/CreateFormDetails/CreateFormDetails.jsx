@@ -11,24 +11,25 @@ import {
 	EMPTY_AUTHORS_LIST,
 } from '../../../../constants';
 
-import './createCourseDetails.css';
+import classes from './CreateFormDetails.module.css';
 
-const CreateCourseDetails = (props) => {
+const CreateFormDetails = (props) => {
 	const authors = useSelector(getAuthors);
 	const [courseAuthors, setCourseAuthors] = useState([]);
 	const [allAuthors, setAllAuthors] = useState([]);
 
 	useEffect(() => {
 		const courseAuthorsId = courseAuthors.map((item) => item.id);
+		// const courseAuthorsId = props.data.authors;
 		const updatedAuthorsList = authors.filter((item) => {
 			return !courseAuthorsId.includes(item.id);
 		});
 		setAllAuthors(updatedAuthorsList);
-	}, [authors]);
+	}, [authors, courseAuthors]);
 
 	useEffect(() => {
 		props.getCourseAuthors(courseAuthors);
-	});
+	}, [courseAuthors]);
 
 	function addCourseAuthor(newAuthor) {
 		setCourseAuthors([newAuthor, ...courseAuthors]);
@@ -68,18 +69,18 @@ const CreateCourseDetails = (props) => {
 		);
 
 	return (
-		<div className='create-course__details'>
-			<div className='create-course__details-col'>
+		<div className={classes.details}>
+			<div className={classes.col}>
 				<AddAuthor />
-				<Duration />
+				<Duration data={props.data} />
 			</div>
-			<div className='create-course__details-col'>
-				<div className='create-course__authors'>
-					<h2 className='create-course__details-title'>Authors</h2>
+			<div className={classes.col}>
+				<div>
+					<h2 className={classes.title}>Authors</h2>
 					{authorsList}
 				</div>
-				<div className='create-course__authors-list'>
-					<h2 className='create-course__details-title'>Course authors</h2>
+				<div>
+					<h2 className={classes.title}>Course authors</h2>
 					{courseAuthorsList}
 				</div>
 			</div>
@@ -87,4 +88,4 @@ const CreateCourseDetails = (props) => {
 	);
 };
 
-export default CreateCourseDetails;
+export default CreateFormDetails;

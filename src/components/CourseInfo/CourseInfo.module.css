@@ -1,29 +1,29 @@
-.course-info__wrapper {
+.wrapper {
   border: 1px solid black;
   margin: 15px 0;
   padding: 15px;
 }
 
-.course-info {
+.info {
   display: flex;
   justify-content: space-between;
   gap: 30px;
 }
 
-.course-info__details {
+.details {
   min-width: 30%;
 }
 
-.course-info__authors-wrapper {
+.authorsWrapper {
   display: inline;
 }
 
-.course-info__title {
+.title {
   margin-top: 0;
   text-align: center;
 }
 
-.course-info__desc {
+.description {
   margin: 0;
 }
 

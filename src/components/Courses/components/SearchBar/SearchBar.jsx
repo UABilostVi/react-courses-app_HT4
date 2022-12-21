@@ -4,11 +4,11 @@ import { Input } from '../../../../common/Input';
 import { Button } from '../../../../common/Button';
 import { BUTTON_SEARCH_TEXT, SEARCH_PLCHDR } from '../../../../constants';
 
-import './searchBar.css';
+import classes from './SearchBar.module.css';
 
 const SearchBar = (props) => {
 	return (
-		<form className='search-wrapper' onSubmit={props.onSubmit}>
+		<form className={classes.searcWrapper} onSubmit={props.onSubmit}>
 			<Input
 				onChange={props.onChange}
 				type='text'

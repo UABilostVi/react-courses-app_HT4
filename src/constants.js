@@ -31,3 +31,4 @@ export const DESCR_ROWS = 5;
 export const MIN_TIME = 0;
 export const TITLE_MIN_LENGTH = 2;
 export const NAME_MIN_LENGTH = 2;
+export const PASS_MIN_LENGTH = 6;

@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { Input } from '../../common/Input';
 import { Button } from '../../common/Button';
-import { fetchRegistr } from '../../services';
+
+import { registrationThunk } from '../../store/user/thunk';
+
 import {
 	REGISTRATION_TEXT,
 	BUTTON_LOGIN_TEXT,
 	PASSWORD,
 	EMAIL,
 	NAME,
+	NAME_MIN_LENGTH,
+	PASS_MIN_LENGTH,
 } from '../../constants';
 
 const Registration = () => {
@@ -17,15 +22,11 @@ const Registration = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	function submitHandler(e) {
 		e.preventDefault();
-		const newUser = {
-			name: name,
-			email: email,
-			password: password,
-		};
-		fetchRegistr(newUser);
+		dispatch(registrationThunk({ name, email, password }));
 		navigate('/login');
 	}
 
@@ -47,14 +48,14 @@ const Registration = () => {
 				<fieldset>
 					<legend className='text-center'>{REGISTRATION_TEXT}</legend>
 					<Input
-						minLength={2}
+						minLength={NAME_MIN_LENGTH}
 						type='text'
 						labelText={NAME}
 						onChange={onChangeName}
 					/>
 					<Input type='email' labelText={EMAIL} onChange={onChangeEmail} />
 					<Input
-						minLength={6}
+						minLength={PASS_MIN_LENGTH}
 						type='password'
 						labelText={PASSWORD}
 						onChange={onChangePassword}

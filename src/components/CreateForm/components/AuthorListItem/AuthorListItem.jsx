@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Button } from '../../../../common/Button';
 
+import classes from './AuthorListItem.module.css';
+
 const AuthorListItem = (props) => {
 	const author = props.author;
 
@@ -15,9 +17,9 @@ const AuthorListItem = (props) => {
 			key={author.id}
 			id={author.id}
 			title={author.name}
-			className='author-item'
+			className={classes.item}
 		>
-			<span className='author-item-name'>{author.name}</span>
+			<span>{author.name}</span>
 			<Button
 				type='button'
 				buttonText={props.buttonText}

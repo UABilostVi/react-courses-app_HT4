@@ -2,54 +2,41 @@ import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import { currentUserThunk } from './store/user/thunk';
+
 import { Header } from './components/Header';
 import { Login } from './components/Login';
 import { Registration } from './components/Registration';
 import { Courses } from './components/Courses';
-import { CreateCourse } from './components/CreateCourse';
+import { CreateForm } from './components/CreateForm';
 import { CourseInfo } from './components/CourseInfo';
-import { fetchAllCourses, fetchAllAuthors } from './services';
-import { setCoursesAction } from './store/courses/actionCreators';
-import { setAuthorsAction } from './store/authors/actionCreators';
-import { logInAction } from './store/user/actionCreators';
+import { PrivateRoute } from './components/PrivateRouter';
+
+// import { getAuthors } from './store/authors/thunk';
+// import { getCourses } from './store/courses/thunk';
 
 import './App.css';
 
 function App() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const token = JSON.parse(localStorage.getItem('userToken'));
+	const token = localStorage.getItem('userToken');
 
 	useEffect(() => {
-		checkToken();
-		getAuthors();
-		getCourses();
-	}, []);
-
-	function checkToken() {
 		if (token) {
-			dispatch(logInAction(token));
+			dispatch(currentUserThunk());
+			// dispatch(getAuthors());
+			// dispatch(getCourses());
 		} else {
 			navigate('login');
 		}
-	}
-
-	async function getCourses() {
-		const courses = await fetchAllCourses();
-		dispatch(setCoursesAction(courses));
-	}
-
-	async function getAuthors() {
-		const authors = await fetchAllAuthors();
-		dispatch(setAuthorsAction(authors));
-	}
+	}, []);
 
 	return (
 		<>
 			<Header />
 			<main className='main'>
 				<Routes>
-					<Route path='*' element={<h1>Page not found</h1>} />
 					<Route path='/' element={<Navigate to='/courses' />} />
 					<Route
 						path='registration'
@@ -60,8 +47,12 @@ function App() {
 						element={token ? <Navigate to='/courses' /> : <Login />}
 					/>
 					<Route path='courses' element={<Courses />} />
-					<Route path='courses/add' element={<CreateCourse />} />
+					<Route element={<PrivateRoute />}>
+						<Route path='courses/add' element={<CreateForm />} />
+						<Route path='courses/update/:courseId' element={<CreateForm />} />
+					</Route>
 					<Route path='courses/:courseId' element={<CourseInfo />} />
+					<Route path='*' element={<h1>Page not found</h1>} />
 				</Routes>
 			</main>
 		</>

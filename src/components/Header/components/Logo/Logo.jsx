@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../../../../assets/logo.png';
-import './logo.css';
+import classes from './Logo.module.css';
 
-const Logo = () => <img className='avatar' src={logo} alt='logo' />;
+const Logo = () => <img className={classes.img} src={logo} alt='logo' />;
 
 export default Logo;

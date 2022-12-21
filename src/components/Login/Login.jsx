@@ -4,8 +4,9 @@ import { useDispatch } from 'react-redux';
 
 import { Input } from '../../common/Input';
 import { Button } from '../../common/Button';
-import { logInAction } from '../../store/user/actionCreators';
-import { fetchLogin } from '../../services';
+
+import { loginThunk } from '../../store/user/thunk';
+
 import {
 	REGISTRATION_TEXT,
 	BUTTON_LOGIN_TEXT,
@@ -19,25 +20,12 @@ const Login = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	async function onSubmit(e) {
+	function onSubmit(e) {
 		e.preventDefault();
+		dispatch(loginThunk({ email, password }, navCourses));
+	}
 
-		const loginPayload = {
-			email: email,
-			password: password,
-		};
-
-		const res = await fetchLogin(loginPayload);
-
-		const storePayload = {
-			isAuth: true,
-			name: res.data.user.name,
-			email: res.data.user.email,
-			token: res.data.result,
-		};
-
-		localStorage.setItem('userToken', JSON.stringify(storePayload));
-		dispatch(logInAction(storePayload));
+	function navCourses() {
 		navigate('/courses');
 	}
 

@@ -7,6 +7,7 @@ const Input = (props) => {
 		<label htmlFor={props.id}>
 			{props.labelText}
 			<input
+				defaultValue={props.defaultValue}
 				value={props.value}
 				name={props.name}
 				onChange={props.onChange}

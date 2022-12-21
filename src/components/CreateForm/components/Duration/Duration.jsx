@@ -4,9 +4,9 @@ import { Input } from '../../../../common/Input';
 import { pipeDuration } from '../../../../helpers/pipeDuration';
 import { DUR_PLCHDR, MIN_TIME, DURATION } from '../../../../constants';
 
-import './duration.css';
+import classes from './Duration.module.css';
 
-const Duration = () => {
+const Duration = (props) => {
 	const [time, setTime] = useState(MIN_TIME);
 	const durationTime = pipeDuration(time);
 
@@ -19,18 +19,20 @@ const Duration = () => {
 	}
 
 	return (
-		<fieldset className='create-course__duration'>
-			<legend className='create-course__details-title'>{DURATION}</legend>
+		<fieldset>
+			<legend className={classes.legend}>{DURATION}</legend>
 			<Input
+				defaultValue={props?.data?.duration}
 				type='number'
-				name='duration'
+				name={classes.duration}
 				onChange={onChangeTime}
 				labelText={DURATION}
 				placeholder={DUR_PLCHDR}
 				min={MIN_TIME}
 			/>
-			<p className='create-course__duration-show'>
-				{DURATION} :<strong>{durationTime}</strong> hours
+			<p>
+				{DURATION}: <strong className={classes.hours}>{durationTime}</strong>{' '}
+				hours
 			</p>
 		</fieldset>
 	);

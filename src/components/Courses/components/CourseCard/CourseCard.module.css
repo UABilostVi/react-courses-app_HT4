@@ -1,4 +1,4 @@
-.course-card {
+.courseCard {
   display: flex;
   justify-content: space-between;
   gap: 30px;
@@ -7,27 +7,28 @@
   padding: 15px;
 }
 
-.course-card__authors {
+.courseAuthors {
   max-width: 300px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.course-card__details {
+.courseDetails {
   min-width: 300px;
 }
 
-.course-card__authors-wrapper {
+.authorsWrapper {
   display: inline;
 }
 
-.course-card__title {
+.courseTitle {
   margin-top: 0;
 }
 
-.course-card__buttons-holder {
+.buttonsHolder {
   display: flex;
+  justify-content: center;
   gap: 5px;
   margin: 10px 0;
 }
