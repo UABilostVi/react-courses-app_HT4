@@ -49,13 +49,12 @@ export const createCourse = (course) => {
 	};
 };
 
-export const updateCourse = (course) => {
+export const updateCourse = (data, courseId) => {
 	return (dispatch) => {
 		serviceAPI
-			.fetchUpdateCourse(course)
+			.fetchUpdateCourse(data, courseId)
 			.then((res) => {
-				console.log(res);
-				if (res.status === 201) {
+				if (res.status === 200) {
 					dispatch(updateCourseAction(res.data.result));
 				}
 			})

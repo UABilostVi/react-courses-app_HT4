@@ -21,7 +21,7 @@ export const coursesReducer = (state = coursesInitialState, action) => {
 			];
 		case UPDT_COURSE:
 			return [
-				...state.filter((course) => course.id !== action.payload),
+				...state.filter((course) => course.id !== action.payload.id),
 				action.payload,
 			];
 		default:

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { Input } from '../../../../common/Input';
 import { Button } from '../../../../common/Button';
@@ -17,6 +18,7 @@ import classes from './CreateFormMain.module.css';
 
 const CreateFormMain = () => {
 	const course = useContext(CourseContext);
+	const location = useLocation();
 	return (
 		<div>
 			<div className={classes.item}>
@@ -28,7 +30,11 @@ const CreateFormMain = () => {
 					placeholder={TITLE_PLCHDR}
 					minLength={TITLE_MIN_LENGTH}
 				/>
-				<Button buttonText={BUTTON_CREATE_COURSE_TEXT} type='submit' />
+				{location.pathname.includes('update') ? (
+					<Button buttonText='Update course' type='submit' />
+				) : (
+					<Button buttonText={BUTTON_CREATE_COURSE_TEXT} type='submit' />
+				)}
 			</div>
 			<div className={classes.item}>
 				<textarea

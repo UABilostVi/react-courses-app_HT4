@@ -1,12 +1,12 @@
 import React, { useState, createContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { CreateFormMain } from './components/CreateFormMain';
 import { CreateFormDetails } from './components/CreateFormDetails';
 
-import { getCreationDate } from '../../helpers/dateGenerator';
-import { createCourse } from '../../store/courses/thunk';
+// import { getCreationDate } from '../../helpers/dateGenerator';
+import { createCourse, updateCourse } from '../../store/courses/thunk';
 
 import { FILL_ALERT } from '../../constants';
 
@@ -21,6 +21,7 @@ const CreateForm = () => {
 	const course = courses.find((course) => {
 		return course.id === courseId;
 	});
+	const location = useLocation();
 
 	function getCourseAuthors(authors) {
 		setcourseAuthors(authors);
@@ -41,16 +42,19 @@ const CreateForm = () => {
 	}
 
 	function CreateForm(e) {
-		const newCourse = {
+		const data = {
 			title: e.target.title.value,
 			description: e.target.description.value,
-			creationDate: getCreationDate(),
 			duration: Number(e.target.duration.value),
-			authors: courseAuthors.map((course) => {
-				return course.id;
+			authors: courseAuthors.map((author) => {
+				return author.id;
 			}),
 		};
-		dispatch(createCourse(newCourse));
+		if (location.pathname.includes('update')) {
+			dispatch(updateCourse(data, courseId));
+		} else {
+			dispatch(createCourse(data));
+		}
 	}
 
 	return (

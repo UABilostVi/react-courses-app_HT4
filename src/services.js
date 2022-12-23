@@ -61,8 +61,8 @@ export const serviceAPI = {
 		});
 	},
 
-	fetchUpdateCourse(course) {
-		return axs.put(`courses/id`, course, {
+	fetchUpdateCourse(data, courseId) {
+		return axs.put(`courses/${courseId}`, data, {
 			headers: {
 				Authorization: `${localStorage.getItem('userToken')}`,
 			},
