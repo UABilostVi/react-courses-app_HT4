@@ -45,59 +45,6 @@ const CreateFormDetails = (props) => {
 		setCourseAuthors((prev) => prev.filter((item) => item.id !== newAuthor.id));
 	}
 
-	// let authorsList = allAuthors.map((author) => {
-	// 	return (
-	// <AuthorListItem
-	// 	key={author.id}
-	// 	author={author}
-	// 	buttonText={BUTTON_ADD_AUTHOR_TEXT}
-	// 	onClickHand={addCourseAuthor}
-	// />
-	// 		<div
-	// 			key={author.id}
-	// 			id={author.id}
-	// 			title={author.name}
-	// 			className={classes.item}
-	// 		>
-	// 			<span>{author.name}</span>
-	// 			<Button
-	// 				type='button'
-	// 				buttonText={BUTTON_ADD_AUTHOR_TEXT}
-	// 				onClick={addCourseAuthor}
-	// 			/>
-	// 		</div>
-	// 	);
-	// });
-
-	// let courseAuthorsList =
-	// 	courseAuthors.length === 0 ? (
-	// 		<div style={{ textAlign: 'center' }}>{EMPTY_AUTHORS_LIST}</div>
-	// 	) : (
-	// 		courseAuthors.map((author) => {
-	// 			return (
-	// 				// <AuthorListItem
-	// 				// 	key={author.id}
-	// 				// 	author={author}
-	// 				// 	buttonText={BUTTON_DEL_AUTHOR_TEXT}
-	// 				// 	onClickHand={delCourseAuthor}
-	// 				// />
-	// 				<div
-	// 					key={author.id}
-	// 					id={author.id}
-	// 					title={author.name}
-	// 					className={classes.item}
-	// 				>
-	// 					<span>{author.name}</span>
-	// 					<Button
-	// 						type='button'
-	// 						buttonText={BUTTON_DEL_AUTHOR_TEXT}
-	// 						onClick={delCourseAuthor}
-	// 					/>
-	// 				</div>
-	// 			);
-	// 		})
-	// 	);
-
 	return (
 		<div className={classes.details}>
 			<div className={classes.col}>
