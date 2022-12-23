@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import { Input } from '../../../../common/Input';
 import { pipeDuration } from '../../../../helpers/pipeDuration';
@@ -6,9 +6,16 @@ import { DUR_PLCHDR, MIN_TIME, DURATION } from '../../../../constants';
 
 import classes from './Duration.module.css';
 
-const Duration = (props) => {
+import { CourseContext } from '../../CreateForm';
+
+const Duration = () => {
 	const [time, setTime] = useState(MIN_TIME);
-	const durationTime = pipeDuration(time);
+	const durationTime = pipeDuration(time || MIN_TIME);
+	const course = useContext(CourseContext);
+
+	useEffect(() => {
+		setTime(course?.duration);
+	}, []);
 
 	function onChangeTime(e) {
 		if (e.target.value === '') {
@@ -20,11 +27,11 @@ const Duration = (props) => {
 
 	return (
 		<fieldset>
-			<legend className={classes.legend}>{DURATION}</legend>
+			<legend className='legend'>{DURATION}</legend>
 			<Input
-				defaultValue={props?.data?.duration}
+				defaultValue={course?.duration}
 				type='number'
-				name={classes.duration}
+				name='duration'
 				onChange={onChangeTime}
 				labelText={DURATION}
 				placeholder={DUR_PLCHDR}

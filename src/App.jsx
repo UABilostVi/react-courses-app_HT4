@@ -12,8 +12,8 @@ import { CreateForm } from './components/CreateForm';
 import { CourseInfo } from './components/CourseInfo';
 import { PrivateRoute } from './components/PrivateRouter';
 
-// import { getAuthors } from './store/authors/thunk';
-// import { getCourses } from './store/courses/thunk';
+import { getAuthors } from './store/authors/thunk';
+import { getCourses } from './store/courses/thunk';
 
 import './App.css';
 
@@ -25,8 +25,8 @@ function App() {
 	useEffect(() => {
 		if (token) {
 			dispatch(currentUserThunk());
-			// dispatch(getAuthors());
-			// dispatch(getCourses());
+			dispatch(getAuthors());
+			dispatch(getCourses());
 		} else {
 			navigate('login');
 		}

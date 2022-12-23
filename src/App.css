@@ -30,6 +30,13 @@ body {
   transform: translate(-50%, -50%);
 }
 
-.text-center {
+.legend {
   text-align: center;
+  font-size: 22px;
+  font-weight: bolder;
+}
+
+fieldset {
+  border-radius: 15px;
+  border: 1px solid black;
 }

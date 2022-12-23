@@ -46,7 +46,7 @@ const Registration = () => {
 		<div className='auth-wrapper'>
 			<form onSubmit={submitHandler}>
 				<fieldset>
-					<legend className='text-center'>{REGISTRATION_TEXT}</legend>
+					<legend className='legend'>{REGISTRATION_TEXT}</legend>
 					<Input
 						minLength={NAME_MIN_LENGTH}
 						type='text'

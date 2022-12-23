@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, createContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,22 +10,20 @@ import { createCourse } from '../../store/courses/thunk';
 
 import { FILL_ALERT } from '../../constants';
 
-import './createForm.css';
+export const CourseContext = createContext({});
 
 const CreateForm = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { courseId } = useParams();
-	// const [data, setData] = useState([]);
-
+	const [courseAuthors, setcourseAuthors] = useState([]);
 	const courses = useSelector((state) => state.courses);
 	const course = courses.find((course) => {
 		return course.id === courseId;
 	});
 
-	let courseAuthors;
-	function getCourseAuthors(data) {
-		courseAuthors = data;
+	function getCourseAuthors(authors) {
+		setcourseAuthors(authors);
 	}
 
 	function onSubmit(e) {
@@ -57,9 +55,11 @@ const CreateForm = () => {
 
 	return (
 		<div className='container'>
-			<form onSubmit={onSubmit} className='create-course__wrapper'>
-				<CreateFormMain data={course} />
-				<CreateFormDetails data={course} getCourseAuthors={getCourseAuthors} />
+			<form onSubmit={onSubmit}>
+				<CourseContext.Provider value={course}>
+					<CreateFormMain />
+					<CreateFormDetails getCourseAuthors={getCourseAuthors} />
+				</CourseContext.Provider>
 			</form>
 		</div>
 	);

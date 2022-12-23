@@ -14,8 +14,6 @@ import {
 	AUTHOR_NAME_TEXT,
 } from '../../../../constants';
 
-import classes from './AddAuthor.module.css';
-
 const AddAuthor = () => {
 	const dispatch = useDispatch();
 	const [name, setName] = useState('');
@@ -35,7 +33,7 @@ const AddAuthor = () => {
 
 	return (
 		<fieldset>
-			<legend className={classes.legend}>Add author</legend>
+			<legend className='legend'>Add author</legend>
 			<Input
 				value={name}
 				name='authorName'

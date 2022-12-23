@@ -6,7 +6,8 @@ import { Input } from '../../common/Input';
 import { Button } from '../../common/Button';
 
 import { loginThunk } from '../../store/user/thunk';
-
+import { getAuthors } from '../../store/authors/thunk';
+import { getCourses } from '../../store/courses/thunk';
 import {
 	REGISTRATION_TEXT,
 	BUTTON_LOGIN_TEXT,
@@ -23,6 +24,8 @@ const Login = () => {
 	function onSubmit(e) {
 		e.preventDefault();
 		dispatch(loginThunk({ email, password }, navCourses));
+		dispatch(getAuthors());
+		dispatch(getCourses());
 	}
 
 	function navCourses() {
@@ -41,7 +44,7 @@ const Login = () => {
 		<div className='auth-wrapper'>
 			<form onSubmit={onSubmit}>
 				<fieldset>
-					<legend className='text-center'>Login</legend>
+					<legend className='legend'>Login</legend>
 					<Input type='email' labelText={EMAIL} onChange={onChangeEmail} />
 					<Input
 						type='password'

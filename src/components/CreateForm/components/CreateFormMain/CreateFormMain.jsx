@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { Input } from '../../../../common/Input';
 import { Button } from '../../../../common/Button';
+import { CourseContext } from '../../CreateForm';
 import {
 	TITLE_PLCHDR,
 	DESCR_PLCHDR,
@@ -14,12 +15,13 @@ import {
 
 import classes from './CreateFormMain.module.css';
 
-const CreateFormMain = (props) => {
+const CreateFormMain = () => {
+	const course = useContext(CourseContext);
 	return (
 		<div>
 			<div className={classes.item}>
 				<Input
-					defaultValue={props?.data?.title}
+					defaultValue={course?.title}
 					name='title'
 					labelText={TITLE}
 					type='text'
@@ -30,7 +32,7 @@ const CreateFormMain = (props) => {
 			</div>
 			<div className={classes.item}>
 				<textarea
-					defaultValue={props?.data?.description}
+					defaultValue={course?.description}
 					name='description'
 					className={classes.description}
 					placeholder={DESCR_PLCHDR}

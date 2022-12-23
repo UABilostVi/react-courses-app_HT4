@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 
 import { AddAuthor } from '../AddAuthor';
-import { AuthorListItem } from '../AuthorListItem';
+import { AuthorsList } from '../AuthorsList';
 import { Duration } from '../Duration';
 import { getAuthors } from './selectors';
 import {
 	BUTTON_ADD_AUTHOR_TEXT,
 	BUTTON_DEL_AUTHOR_TEXT,
-	EMPTY_AUTHORS_LIST,
 } from '../../../../constants';
+
+import { CourseContext } from '../../CreateForm';
 
 import classes from './CreateFormDetails.module.css';
 
@@ -17,15 +18,18 @@ const CreateFormDetails = (props) => {
 	const authors = useSelector(getAuthors);
 	const [courseAuthors, setCourseAuthors] = useState([]);
 	const [allAuthors, setAllAuthors] = useState([]);
+	const course = useContext(CourseContext);
 
 	useEffect(() => {
-		const courseAuthorsId = courseAuthors.map((item) => item.id);
-		// const courseAuthorsId = props.data.authors;
 		const updatedAuthorsList = authors.filter((item) => {
-			return !courseAuthorsId.includes(item.id);
+			return !course?.authors.includes(item.id);
+		});
+		const updatedCourseAuthors = authors.filter((item) => {
+			return course?.authors.includes(item.id);
 		});
 		setAllAuthors(updatedAuthorsList);
-	}, [authors, courseAuthors]);
+		setCourseAuthors(updatedCourseAuthors);
+	}, [authors]);
 
 	useEffect(() => {
 		props.getCourseAuthors(courseAuthors);
@@ -41,48 +45,78 @@ const CreateFormDetails = (props) => {
 		setCourseAuthors((prev) => prev.filter((item) => item.id !== newAuthor.id));
 	}
 
-	let authorsList = allAuthors.map((author) => {
-		return (
-			<AuthorListItem
-				key={author.id}
-				author={author}
-				buttonText={BUTTON_ADD_AUTHOR_TEXT}
-				onClickHand={addCourseAuthor}
-			/>
-		);
-	});
+	// let authorsList = allAuthors.map((author) => {
+	// 	return (
+	// <AuthorListItem
+	// 	key={author.id}
+	// 	author={author}
+	// 	buttonText={BUTTON_ADD_AUTHOR_TEXT}
+	// 	onClickHand={addCourseAuthor}
+	// />
+	// 		<div
+	// 			key={author.id}
+	// 			id={author.id}
+	// 			title={author.name}
+	// 			className={classes.item}
+	// 		>
+	// 			<span>{author.name}</span>
+	// 			<Button
+	// 				type='button'
+	// 				buttonText={BUTTON_ADD_AUTHOR_TEXT}
+	// 				onClick={addCourseAuthor}
+	// 			/>
+	// 		</div>
+	// 	);
+	// });
 
-	let courseAuthorsList =
-		courseAuthors.length === 0 ? (
-			<div style={{ textAlign: 'center' }}>{EMPTY_AUTHORS_LIST}</div>
-		) : (
-			courseAuthors.map((author) => {
-				return (
-					<AuthorListItem
-						key={author.id}
-						author={author}
-						buttonText={BUTTON_DEL_AUTHOR_TEXT}
-						onClickHand={delCourseAuthor}
-					/>
-				);
-			})
-		);
+	// let courseAuthorsList =
+	// 	courseAuthors.length === 0 ? (
+	// 		<div style={{ textAlign: 'center' }}>{EMPTY_AUTHORS_LIST}</div>
+	// 	) : (
+	// 		courseAuthors.map((author) => {
+	// 			return (
+	// 				// <AuthorListItem
+	// 				// 	key={author.id}
+	// 				// 	author={author}
+	// 				// 	buttonText={BUTTON_DEL_AUTHOR_TEXT}
+	// 				// 	onClickHand={delCourseAuthor}
+	// 				// />
+	// 				<div
+	// 					key={author.id}
+	// 					id={author.id}
+	// 					title={author.name}
+	// 					className={classes.item}
+	// 				>
+	// 					<span>{author.name}</span>
+	// 					<Button
+	// 						type='button'
+	// 						buttonText={BUTTON_DEL_AUTHOR_TEXT}
+	// 						onClick={delCourseAuthor}
+	// 					/>
+	// 				</div>
+	// 			);
+	// 		})
+	// 	);
 
 	return (
 		<div className={classes.details}>
 			<div className={classes.col}>
 				<AddAuthor />
-				<Duration data={props.data} />
+				<Duration />
 			</div>
 			<div className={classes.col}>
-				<div>
-					<h2 className={classes.title}>Authors</h2>
-					{authorsList}
-				</div>
-				<div>
-					<h2 className={classes.title}>Course authors</h2>
-					{courseAuthorsList}
-				</div>
+				<AuthorsList
+					list={allAuthors}
+					title='Authors'
+					clickHandler={addCourseAuthor}
+					buttonText={BUTTON_ADD_AUTHOR_TEXT}
+				/>
+				<AuthorsList
+					list={courseAuthors}
+					title='Course authors'
+					clickHandler={delCourseAuthor}
+					buttonText={BUTTON_DEL_AUTHOR_TEXT}
+				/>
 			</div>
 		</div>
 	);

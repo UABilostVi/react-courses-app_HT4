@@ -22,13 +22,11 @@ const CourseCard = (props) => {
 	const durationTime = pipeDuration(course.duration);
 	const authors = useSelector(selectAuthors);
 
-	const courseAuthors = course.authors.map((authorId) => {
-		return authors.find(({ id }) => id === authorId);
-	});
-
-	const courseAuthorsList = courseAuthors.map((author, index, array) => {
-		return index + 1 === array.length ? author.name : author.name + ', ';
-	});
+	const courseAuthors = (course.authors || [])
+		.map((authorId) => (authors || []).find(({ id }) => id === authorId))
+		.filter(Boolean)
+		.map((author) => author.name)
+		.join(', ');
 
 	function onShowCourse() {
 		navigate(`${course.id}`);
@@ -51,7 +49,7 @@ const CourseCard = (props) => {
 			<div className={classes.courseDetails}>
 				<div className={classes.courseAuthors}>
 					<strong>Authors: </strong>
-					<div className={classes.authorsWrapper}>{courseAuthorsList}</div>
+					<div className={classes.authorsWrapper}>{courseAuthors}</div>
 				</div>
 				<div>
 					<strong>Duration: </strong>
