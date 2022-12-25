@@ -41,3 +41,8 @@ fieldset {
   border-radius: 15px;
   border: 1px solid black;
 }
+
+.emptyList {
+  text-align: center;
+  font-weight: bolder;
+}
