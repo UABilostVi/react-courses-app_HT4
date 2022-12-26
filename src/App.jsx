@@ -24,6 +24,7 @@ function App() {
 
 	useEffect(() => {
 		if (token) {
+			console.log('UseApp');
 			dispatch(currentUserThunk());
 			dispatch(getAuthors());
 			dispatch(getCourses());

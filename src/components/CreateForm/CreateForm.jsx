@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CreateFormMain } from './components/CreateFormMain';
 import { CreateFormDetails } from './components/CreateFormDetails';
 
-// import { getCreationDate } from '../../helpers/dateGenerator';
 import { createCourse, updateCourse } from '../../store/courses/thunk';
 
 import { FILL_ALERT } from '../../constants';
@@ -13,6 +12,7 @@ import { FILL_ALERT } from '../../constants';
 export const CourseContext = createContext({});
 
 const CreateForm = () => {
+	console.log('Form');
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { courseId } = useParams();
